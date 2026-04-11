@@ -1,0 +1,57 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs and runtime files
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+
+# Package manager caches
+.npm/
+.pnpm-store/
+.yarn/
+.bun/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.python-version
+.venv/
+venv/
+env/
+
+# Rust
+target/
+
+# Test and coverage output
+.coverage
+.coverage.*
+coverage/
+.pytest_cache/
+
+# Build and temp artifacts
+dist/
+build/
+tmp/
+temp/
+.cache/
+
+# IDE/editor settings
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

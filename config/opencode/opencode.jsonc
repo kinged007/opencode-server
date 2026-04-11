@@ -1,0 +1,111 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // Server configuration
+  "server": {
+    "port": 4096,
+    "hostname": "0.0.0.0",
+    "mdns": false
+  },
+
+  // Default model - OpenRouter free tier
+  "model": "openrouter/free",
+
+  // Small model for lightweight tasks
+  "small_model": "openrouter/free",
+
+  // Provider configurations
+  "provider": {
+    "openrouter": {
+      "options": {
+        "apiKey": "{env:OPENROUTER_API_KEY}"
+      },
+      "models": {
+        "free": {
+          "name": "OpenRouter Free Models"
+        }
+      }
+    },
+    "openai": {
+      "options": {
+        "apiKey": "{env:OPENAI_API_KEY}"
+      }
+    },
+    "anthropic": {
+      "options": {
+        "apiKey": "{env:ANTHROPIC_API_KEY}"
+      }
+    }
+  },
+
+  // Default agent configuration
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "description": "Default build agent with full tool access"
+    },
+    "plan": {
+      "mode": "primary",
+      "description": "Planning agent - makes no file changes",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "write": "deny"
+      }
+    }
+  },
+
+  // Default agent to use
+  "default_agent": "build",
+
+  // Sharing configuration
+  "share": "manual",
+
+  // Permissions - ask for destructive operations
+  "permission": {
+    "bash": "ask"
+  },
+
+  // Context compaction
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  },
+
+  // Snapshot settings
+  "snapshot": true,
+
+  // Autoupdate
+  "autoupdate": true,
+
+  // Watcher ignore patterns
+  "watcher": {
+    "ignore": [
+      "node_modules/**",
+      ".git/**",
+      "dist/**",
+      "build/**",
+      "__pycache__/**",
+      ".venv/**",
+      "venv/**"
+    ]
+  },
+
+  // MCP Servers
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      },
+      "enabled": true
+    }
+  },
+
+  // Plugins
+  "plugin": [
+    "context-mode"
+  ]
+}
