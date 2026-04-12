@@ -101,6 +101,10 @@
         "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
       },
       "enabled": true
+    },
+    "context-mode": {
+      "type": "local",
+      "command": ["context-mode"]
     }
   },
 
