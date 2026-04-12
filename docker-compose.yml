@@ -15,16 +15,9 @@ services:
       - OPENCODE_SERVER_PASSWORD=${OPENCODE_SERVER_PASSWORD}
       - OPENCODE_SERVER_USERNAME=${OPENCODE_SERVER_USERNAME:-opencode}
     volumes:
-      - ./workspaces:/home/opencode/workspaces
-      - opencode-data:/home/opencode/.local/share/opencode
-      - opencode-config:/home/opencode/.config/opencode
-    healthcheck:
-      test: ["CMD", "opencode", "server", "health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
+      - opencode-workspaces:/home/opencode/workspaces
+      - opencode-home:/home/opencode
 
 volumes:
-  opencode-data:
-  opencode-config:
+  opencode-home:
+  opencode-workspaces:
