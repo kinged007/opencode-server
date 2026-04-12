@@ -21,7 +21,7 @@ RUN pacman -Sy --noconfirm && \
     python \
     python-pip \
     git \
-    gh \
+    github-cli \
     curl \
     wget \
     unzip \
@@ -67,12 +67,11 @@ RUN pacman -Sy --noconfirm && \
     python \
     python-pip \
     git \
-    gh \
+    github-cli \
     curl \
     wget \
     unzip \
     gcc \
-    python-setuptools \
     nano \
     vim \
     && rm -rf /var/cache/pacman/*
