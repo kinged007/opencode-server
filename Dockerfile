@@ -15,12 +15,15 @@ ENV LC_ALL=C
 # Update and install base build dependencies
 RUN pacman -Sy --noconfirm && \
     pacman -S --noconfirm \
+    ca-certificates \
     nodejs \
     npm \
     python \
     python-pip \
     git \
+    github-cli \
     curl \
+    wget \
     unzip \
     base-devel \
     && rm -rf /var/cache/pacman/*
@@ -57,12 +60,15 @@ ENV PATH="/root/.cargo/bin:/usr/bin:${PATH}"
 # Install runtime dependencies only (no base-devel)
 RUN pacman -Sy --noconfirm && \
     pacman -S --noconfirm \
+    ca-certificates \
     nodejs \
     npm \
     python \
     python-pip \
     git \
+    github-cli \
     curl \
+    wget \
     unzip \
     && rm -rf /var/cache/pacman/*
 
@@ -81,6 +87,9 @@ COPY --from=builder /usr/bin/uv /usr/bin/uv
 # Verify installations (pnpm will be installed in next step with opencode)
 RUN node --version && npm --version && \
     git --version && \
+    gh --version && \
+    curl --version && \
+    wget --version && \
     /usr/bin/bun --version && \
     /usr/bin/rustc --version && \
     /usr/bin/cargo --version && \
