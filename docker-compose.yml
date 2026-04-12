@@ -17,6 +17,7 @@ services:
     volumes:
       - ./workspaces:/home/opencode/workspaces
       - opencode-data:/home/opencode/.local/share/opencode
+      - opencode-config:/home/opencode/.config/opencode
     healthcheck:
       test: ["CMD", "opencode", "server", "health"]
       interval: 30s
@@ -26,3 +27,4 @@ services:
 
 volumes:
   opencode-data:
+  opencode-config:
