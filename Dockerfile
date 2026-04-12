@@ -20,12 +20,16 @@ RUN pacman -Sy --noconfirm && \
     npm \
     python \
     python-pip \
+    python312 \
+    python312-pip \
     git \
     github-cli \
     curl \
     wget \
     unzip \
     base-devel \
+    nano \
+    vim \
     && rm -rf /var/cache/pacman/*
 
 # ─── pnpm ───
@@ -65,6 +69,8 @@ RUN pacman -Sy --noconfirm && \
     npm \
     python \
     python-pip \
+    python312 \
+    python312-pip \
     git \
     github-cli \
     curl \
@@ -72,6 +78,8 @@ RUN pacman -Sy --noconfirm && \
     unzip \
     gcc \
     python-setuptools \
+    nano \
+    vim \
     && rm -rf /var/cache/pacman/*
 
 # Copy package managers from builder

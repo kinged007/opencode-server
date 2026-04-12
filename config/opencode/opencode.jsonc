@@ -61,9 +61,26 @@
   // Sharing configuration
   "share": "manual",
 
-  // Permissions - ask for destructive operations
+  // Permissions - allow safe read-only commands, ask for others
   "permission": {
-    "bash": "ask"
+    "bash": {
+      "*": "ask",
+      "git *": "allow",
+      "ls *": "allow",
+      "grep *": "allow",
+      "cat *": "allow",
+      "cd *": "allow",
+      "pwd": "allow",
+      "echo *": "allow",
+      "head *": "allow",
+      "tail *": "allow",
+      "wc *": "allow",
+      "sort *": "allow",
+      "uniq *": "allow",
+      "find *": "allow",
+      "stat *": "allow",
+      "tree *": "allow"
+    }
   },
 
   // Context compaction
