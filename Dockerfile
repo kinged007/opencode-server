@@ -20,10 +20,8 @@ RUN pacman -Sy --noconfirm && \
     npm \
     python \
     python-pip \
-    python312 \
-    python312-pip \
     git \
-    github-cli \
+    gh \
     curl \
     wget \
     unzip \
@@ -69,10 +67,8 @@ RUN pacman -Sy --noconfirm && \
     npm \
     python \
     python-pip \
-    python312 \
-    python312-pip \
     git \
-    github-cli \
+    gh \
     curl \
     wget \
     unzip \
