@@ -12,7 +12,7 @@ ENV HOME=/root
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=C
 
-# Update and install base build dependencies
+# Update and install additional dependencies
 RUN pacman -Sy --noconfirm && \
     pacman -S --noconfirm \
     ca-certificates \
@@ -25,7 +25,6 @@ RUN pacman -Sy --noconfirm && \
     curl \
     wget \
     unzip \
-    base-devel \
     nano \
     vim \
     && rm -rf /var/cache/pacman/*
