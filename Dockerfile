@@ -57,7 +57,7 @@ ENV OPENCODE_CONFIG_DIR=/home/opencode/.config/opencode
 ENV WORKSPACE_DIR=/home/opencode/workspaces
 ENV PATH="/root/.cargo/bin:/usr/bin:${PATH}"
 
-# Install runtime dependencies only (no base-devel)
+# Install runtime dependencies including build tools for Python C extensions
 RUN pacman -Sy --noconfirm && \
     pacman -S --noconfirm \
     ca-certificates \
@@ -70,6 +70,8 @@ RUN pacman -Sy --noconfirm && \
     curl \
     wget \
     unzip \
+    gcc \
+    python-setuptools \
     && rm -rf /var/cache/pacman/*
 
 # Copy package managers from builder
