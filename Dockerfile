@@ -90,7 +90,8 @@ RUN node --version && npm --version && \
 RUN useradd -m -s /bin/bash opencode && \
     mkdir -p /home/opencode/.config/opencode && \
     mkdir -p /home/opencode/workspaces && \
-    chown -R opencode:opencode /home/opencode
+    chown -R opencode:opencode /home/opencode && \
+    chmod 775 /home/opencode/workspaces /home/opencode/.config/opencode
 
 USER opencode
 
@@ -108,10 +109,16 @@ RUN npm install -g pnpm opencode-ai context-mode && \
     pnpm --version && \
     opencode --version
 
+USER root
+
 WORKDIR /home/opencode/workspaces
 
 # Copy config directory
-COPY --chown=opencode:opencode config/ /home/opencode/.config/opencode/
+COPY --chown=opencode:opencode config/ /home/opencode/.config/
+
+# Runtime entrypoint handles permission fixes for mounted volumes, then drops to opencode user
+COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Expose default port
 EXPOSE 4096
@@ -120,4 +127,5 @@ EXPOSE 4096
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD opencode server health || exit 1
 
-ENTRYPOINT ["opencode", "serve", "--hostname", "0.0.0.0", "--port", "4096"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["opencode", "serve", "--hostname", "0.0.0.0", "--port", "4096"]

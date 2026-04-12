@@ -5,13 +5,14 @@ echo "Starting OpenCode Server..."
 echo "Workspace directory: $WORKSPACE_DIR"
 echo "Config directory: $OPENCODE_CONFIG_DIR"
 
-# Ensure workspace directory exists and is writable
+# Ensure required directories exist
 mkdir -p "$WORKSPACE_DIR"
-chown -R opencode:opencode "$(dirname "$WORKSPACE_DIR")"
-
-# Ensure config directory exists
 mkdir -p "$OPENCODE_CONFIG_DIR"
-chown -R opencode:opencode "$OPENCODE_CONFIG_DIR"
 
-# Execute the main command
+if [ "$(id -u)" = "0" ]; then
+	chown -R opencode:opencode "$WORKSPACE_DIR" "$OPENCODE_CONFIG_DIR" /home/opencode/.local/share/opencode || true
+	chmod -R u+rwX,g+rwX "$WORKSPACE_DIR" "$OPENCODE_CONFIG_DIR" || true
+	exec runuser -u opencode -- "$@"
+fi
+
 exec "$@"
