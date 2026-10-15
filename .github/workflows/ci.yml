@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate compose config
+        run: docker compose config -q
+
+      - name: Build image
+        run: docker build -t opencode-server:ci .
+
+      - name: Lint shell scripts
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+          shellcheck scripts/entrypoint.sh
+
+      - name: Validate JSONC config
+        run: |
+          node --version
+          node -e "
+          const fs=require('fs');
+          const raw=fs.readFileSync('config/opencode/opencode.jsonc','utf8');
+          // Remove only // comments at line start (JSONC style in this file); avoid breaking https://
+          const stripped=raw.replace(/^\s*\/\/.*$/gm,'').replace(/\/\*[\s\S]*?\*\//g,'');
+          JSON.parse(stripped);
+          console.log('opencode.jsonc: valid JSONC');
+          "
