@@ -5,9 +5,6 @@
 
 Self-hosted Docker deployment for [OpenCode](https://opencode.ai) Server on VPS — multi-provider LLM support, MCP integrations, and ready-to-run agent workspaces.
 
-![Demo](./docs/screenshot.png)
-<!-- Screenshot to be added — shows OpenCode TUI/browser session on VPS -->
-
 ## What it is
 
 OpenCode Server packages the OpenCode AI coding-agent as a VPS-ready Docker stack. It comes with a full toolchain (Node.js, pnpm, bun, uv, Rust), configurable LLM providers (OpenRouter, OpenAI, Anthropic), and MCP server support (Context7, context-mode). Drop your projects into `workspaces/` and you have a persistent, self-hosted agent environment.
