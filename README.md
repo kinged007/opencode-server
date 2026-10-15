@@ -1,64 +1,89 @@
 # OpenCode Server
 
-Docker deployment for [OpenCode](https://opencode.ai) Server on VPS.
+[![CI](https://github.com/kinged007/opencode-server/actions/workflows/ci.yml/badge.svg)](https://github.com/kinged007/opencode-server/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## Quick Start
+Self-hosted Docker deployment for [OpenCode](https://opencode.ai) Server on VPS — multi-provider LLM support, MCP integrations, and ready-to-run agent workspaces.
 
-1. Copy `.env.example` to `.env` and configure your API keys
-2. Run `docker-compose up -d`
-3. Access OpenCode at `http://your-vps-ip:4096`
+![Demo](./docs/screenshot.png)
+<!-- Screenshot to be added — shows OpenCode TUI/browser session on VPS -->
 
-## Configuration
+## What it is
 
-Edit `config/opencode/opencode.jsonc` to customize:
-- LLM providers and models
-- Agent configurations
-- Permissions and tools
+OpenCode Server packages the OpenCode AI coding-agent as a VPS-ready Docker stack. It comes with a full toolchain (Node.js, pnpm, bun, uv, Rust), configurable LLM providers (OpenRouter, OpenAI, Anthropic), and MCP server support (Context7, context-mode). Drop your projects into `workspaces/` and you have a persistent, self-hosted agent environment.
 
-## Workspaces
+## Install
 
-Projects are stored in the `workspaces/` directory, mounted as a volume.
+```bash
+cp .env.example .env   # fill in your API keys
+docker compose up -d --build
+```
 
-## Environment Variables
+Open `http://your-vps-ip:4096` — OpenCode is running.
+
+## Usage
+
+### Configuration
+
+Edit `config/opencode/opencode.jsonc`:
+
+- `provider` — LLM providers and models
+- `agent` — agent configurations (`build` / `plan`)
+- `permission` — per-tool allow/ask/deny rules
+- `mcp` — MCP server configurations
+
+### Workspaces
+
+Place projects in `workspaces/` — mounted as a persistent volume inside the container.
+
+```
+workspaces/
+├── project-1/
+└── project-2/
+```
+
+### Environment Variables
 
 | Variable | Description |
 |----------|-------------|
-| `OPENROUTER_API_KEY` | OpenRouter provider API key |
-| `OPENAI_API_KEY` | OpenAI provider API key |
-| `ANTHROPIC_API_KEY` | Anthropic provider API key |
-| `OPENCODE_SERVER_PASSWORD` | Server authentication password |
-| `OPENCODE_SERVER_USERNAME` | Server auth username (default: opencode) |
+| `OPENROUTER_API_KEY` | OpenRouter API key |
+| `OPENAI_API_KEY` | OpenAI API key |
+| `ANTHROPIC_API_KEY` | Anthropic API key |
+| `CONTEXT7_API_KEY` | Context7 MCP API key |
+| `OPENCODE_SERVER_PASSWORD` | Server auth password |
+| `OPENCODE_SERVER_USERNAME` | Server auth username (default `opencode`) |
 
-## Package Managers Included
+### Package managers included
 
-- **Node.js** (v22) with npm
-- **pnpm** - Fast, disk space efficient package manager
-- **bun** - All-in-one JavaScript runtime & package manager
-- **uv** - Fast Python package manager (written in Rust)
-- **Rust** - Systems programming language
+- Node.js v22 + npm, pnpm, bun
+- uv (Python)
+- Rust (rustup + cargo)
+- git, GitHub CLI (`gh`)
 
-## Adding Customizations
-
-Place customizations in the `config/opencode/` directory:
-
-- `agents/` - Custom agent definitions
-- `commands/` - Custom slash commands
-- `skills/` - Agent skills
-- `tools/` - Custom tools
-- `mcp/` - MCP server configurations
-- `plugins/` - OpenCode plugins
-- `themes/` - UI themes
-
-## Building
+### Building
 
 ```bash
 # Development
-docker-compose up --build
+docker compose up --build
 
-# Production
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
+# Production overlay
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
 ```
+
+### Customizations
+
+`config/opencode/` holds agent definitions, slash commands, skills, tools, MCP configs, plugins, and themes — all mounted into the container.
+
+## How it is tested
+
+CI (`.github/workflows/ci.yml`) runs on push and pull requests to `main`:
+
+- Docker build verification (`docker build` + `docker compose config`)
+- Shell lint (`shellcheck` on `scripts/entrypoint.sh`)
+- JSONC config validation (`config/opencode/opencode.jsonc`)
+
+Run these locally before opening a PR.
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE).
