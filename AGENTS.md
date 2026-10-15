@@ -39,5 +39,5 @@ CI (`.github/workflows/ci.yml`) runs the same checks on push/PR to `main`.
 
 ## Notes
 
-- Do not publish anything derived from private `tenantflex` org repos (see workspace docs/03-tenantflex.md) without written approval from the org owner.
+- Keep this repo self-contained. Do not commit secrets or credentials; use `.env.example` as the template.
 - Building the full image is heavy — for doc-only changes `docker compose config -q` is enough to gate the PR.
